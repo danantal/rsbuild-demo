@@ -5,6 +5,7 @@ import { dependencies }  from './package.json';
 export default defineConfig({
   plugins: [pluginReact()],
   server: {
+    base: '/',
     port: 3000,
   },
   moduleFederation: {
