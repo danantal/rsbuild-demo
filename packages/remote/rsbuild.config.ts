@@ -1,16 +1,15 @@
 import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
+import { pluginModuleFederation } from '@module-federation/rsbuild-plugin';
 import { dependencies }  from './package.json';
 
 export default defineConfig({
   server: {
     base: '/foo',
-    port: 3001
+    port: 3001,
   },
-  moduleFederation: {
-    options: {
-     name: 'remote',
-     filename: 'remoteEntry.js',
+  plugins: [pluginReact(), pluginModuleFederation({
+    name: 'remote',
      exposes: {
        './Button': './src/Button',
      },
@@ -25,7 +24,5 @@ export default defineConfig({
          requiredVersion: dependencies['react-dom'],
        },
      },
-    }
-  },
-  plugins: [pluginReact()]
+  })]
 });

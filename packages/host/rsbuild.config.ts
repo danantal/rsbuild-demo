@@ -1,37 +1,28 @@
 import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
+import { pluginModuleFederation } from '@module-federation/rsbuild-plugin';
 import { dependencies }  from './package.json';
 
 export default defineConfig({
-  plugins: [pluginReact()],
   server: {
     base: '/',
     port: 3000,
   },
-  moduleFederation: {
-    options: {
-      name: 'host',
-      remotes: {
-        remote: 'remote@http://localhost:3001/foo/remoteEntry.js',
+  plugins: [pluginReact(), pluginModuleFederation({
+    name: 'host',
+    remotes: {
+      remote: 'remote@http://localhost:3001/foo/mf-manifest.json',
+    },
+    shared: {
+      ...dependencies,
+      react: {
+        singleton: true,
+        requiredVersion: dependencies['react'],
       },
-      shared: {
-        ...dependencies,
-        react: {
-          singleton: true,
-          requiredVersion: dependencies['react'],
-        },
-        'react-dom': {
-          singleton: true,
-          requiredVersion: dependencies['react-dom'],
-        },
+      'react-dom': {
+        singleton: true,
+        requiredVersion: dependencies['react-dom'],
       },
     },
-
-  },
-  tools: {
-    rspack: (config) => {
-      console.log('rspack config output:', config.output);
-      return config;
-    }
-  }
+  })]
 });

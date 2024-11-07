@@ -8,12 +8,13 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
+    "@module-federation/rsbuild-plugin": "0.6.15",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@rsbuild/core": "^1.0.18",
-    "@rsbuild/plugin-react": "^1.0.5",
+    "@rsbuild/core": "^1.1.0",
+    "@rsbuild/plugin-react": "^1.0.7",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.1"
   }
